@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Projects</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+  <body>
+    <header class="header">
+      <div class="box head-flex">
+        <a href="index.html" class="logo">Mahendren John Kariappan</a>
+        <nav class="nav">
+          <a href="index.html" class="link">Home</a>
+          <a href="about.html" class="link">About</a>
+          <a href="projects.html" class="link active">Projects</a>
+          <a href="contact.html" class="link">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="box main">
+      <section class="works">
+        <h1>Projects</h1>
+        <div class="hex-grid">
+          <article class="hex-card">
+            <div class="hex-content">
+              <h3>School AI</h3>
+              <p>AI that is tailor made for a specific School by tweaking it to fit the needs of the school.</p>
+              <p class="tech">Python and HuggingFace</p>
+              <a href="#" class="plink" onclick="openPopup(1)">View project</a>
+            </div>
+          </article>
+
+          <article class="hex-card">
+            <div class="hex-content">
+              <h3>Weather Dashboard</h3>
+              <p>A responsive weather app showing current and does a 5‑day forecasts.</p>
+              <p class="tech">HTML, CSS, API</p>
+              <a href="#" class="plink" onclick="openPopup(2)">View project</a>
+            </div>
+          </article>
+
+          <article class="hex-card">
+            <div class="hex-content">
+              <h3>Personal Blog</h3>
+              <p>A static blog template with a pretty clean design and very responsive layout.</p>
+              <p class="tech">HTML, CSS</p>
+              <a href="#" class="plink" onclick="openPopup(3)">View project</a>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <div class="project-popup-overlay" id="projectPopup">
+      <div class="project-popup">
+        <div class="popup-header">
+          <button class="popup-close" onclick="closePopup()">✕</button>
+          <h3 class="popup-title" id="popupTitle">Project Title</h3>
+          <div class="popup-tech" id="popupTech">
+          </div>
+        </div>
+        <div class="popup-body">
+          <div class="popup-image-container">
+            <img class="popup-image" id="popupImage" src="" alt="Project Image">
+            <div class="popup-image-overlay"></div>
+            <div class="popup-scan-line"></div>
+          </div>
+          <div class="popup-description" id="popupDescription">
+          </div>
+        </div>
+        <div class="popup-footer">
+          <div class="popup-links">
+            <a href="#" class="popup-link" id="liveDemoLink">Live Demo</a>
+            <a href="#" class="popup-link outline" id="githubLink">GitHub</a>
+          </div>
+          <div class="popup-stats">
+            <span id="popupDate">Deployed: 2024-12-15</span>
+          </div>
+        </div>
+        <div class="popup-glitch"></div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="box foot-flex">
+        <p>© 2025 Kariappan. All rights reserved.</p>
+        <div class="social">
+          <a href="#">Facebook</a>
+          <a href="#">Instagram</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Project data
+      const projects = {
+        1: {
+          title: "School AI",
+          image: "images/aiproject.png",
+          description: "An advanced AI system specifically tailored for educational institutions. This AI adapts to the unique needs of each school by analyzing student performance, teacher feedback, and administrative requirements. It provides personalized learning paths, automates administrative tasks, and offers predictive analytics for student success.",
+          tech: ["Python", "HuggingFace", "TensorFlow", "FastAPI", "PostgreSQL"],
+          date: "2024-12-15",
+          status: "Inactive"
+        },
+        2: {
+          title: "Weather Dashboard",
+          image: "images/weatherapp.png",
+          description: "A responsive weather application that displays current conditions and 5-day forecasts with stunning visualizations. Features include interactive maps, severe weather alerts, location-based predictions, and customizable widgets. The app uses real-time data from multiple meteorological sources.",
+          tech: ["HTML5", "CSS3", "JavaScript", "Weather API"],
+          date: "2024-11-20",
+          status: "Inactive"
+        },
+        3: {
+          title: "Personal Blog",
+          image: "images/bloggg.jpg",
+          description: "A minimalist yet powerful static blog template featuring a clean, responsive design. Built with performance in mind, it includes dark/light mode toggle, syntax highlighting for code snippets, search functionality, and social sharing. The template is fully customizable and optimized for SEO.",
+          tech: ["HTML5", "CSS3", "JavaScript"],
+          date: "2024-10-05",
+          status: "Inactive"
+        }
+      };
+
+      function openPopup(projectId) {
+        const project = projects[projectId];
+        if (!project) return;
+        
+        // Update popup content
+        document.getElementById('popupTitle').textContent = project.title;
+        document.getElementById('popupImage').src = project.image;
+        document.getElementById('popupImage').alt = project.title;
+        document.getElementById('popupDescription').textContent = project.description;
+        document.getElementById('popupDate').textContent = `Deployed: ${project.date} | Status: ${project.status}`;
+        
+        // Update tech badges
+        const techContainer = document.getElementById('popupTech');
+        techContainer.innerHTML = '';
+        project.tech.forEach(tech => {
+          const badge = document.createElement('span');
+          badge.textContent = tech;
+          techContainer.appendChild(badge);
+        });
+        
+        // Update links
+        document.getElementById('liveDemoLink').href = project.liveDemo;
+        document.getElementById('githubLink').href = project.github;
+        
+        // Show popup
+        document.getElementById('projectPopup').classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+      
+      function closePopup() {
+        document.getElementById('projectPopup').classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+      
+      // Close popup when clicking outside
+      document.getElementById('projectPopup').addEventListener('click', function(e) {
+        if (e.target === this) {
+          closePopup();
+        }
+      });
+      
+      // Close popup with Escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && document.getElementById('projectPopup').classList.contains('active')) {
+          closePopup();
+        }
+      });
+      
+      // Prevent default on project links
+      document.querySelectorAll('.plink').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+        });
+      });
+    </script>
+  </body>
+</html>
